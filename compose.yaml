@@ -1,0 +1,18 @@
+services:
+  vsserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 42420:42420
+    volumes:
+      - ./mods:/home/vintagestory/data/Mods
+      - ./saves:/home/vintagestory/data/Saves
+      - ./logs:/home/vintagestory/data/Logs
+    restart: unless-stopped
+    deploy:
+      restart_policy:
+        condition: "on-failure"
+        delay: 5s
+        max_attempts: 3
+        window: 120s
