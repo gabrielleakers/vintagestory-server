@@ -6,7 +6,7 @@ ARG GUID
 USER root
 
 RUN apt-get update && \
-    apt-get install -y wget screen procps
+    apt-get install -y wget
 
 RUN wget https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
@@ -36,7 +36,6 @@ WORKDIR /home/vintagestory
 RUN wget https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_1.22.0.tar.gz -O vs_server_linux.tar.gz && \
     mkdir server && \
     tar -C server -xzf vs_server_linux.tar.gz && \
-    rm vs_server_linux.tar.gz && \
-    chmod +x server/server.sh
+    rm vs_server_linux.tar.gz
 
 ENTRYPOINT ["./entrypoint.sh"]

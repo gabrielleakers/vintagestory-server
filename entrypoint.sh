@@ -6,4 +6,4 @@ while read p; do
     wget -vnc "$p" -O /home/vintagestory/data/Mods/$filename
 done <modlist
 
-/home/vintagestory/server/server.sh start
+/home/vintagestory/server/VintagestoryServer --dataPath /home/vintagestory/data
