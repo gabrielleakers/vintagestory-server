@@ -1,8 +1,9 @@
 #!/bin/bash
 
 while read p; do
-    echo "Downloading mod: $p"
-    [ ! -e "/home/vintagstory/data/Mods/$(basename $p)" ] && wget "$p" -p /home/vintagstory/data/Mods
+    filename=$(basename $p)
+    echo "Downloading mod: /home/vintagestory/data/Mods/$filename"
+    wget -vnc "$p" -O /home/vintagestory/data/Mods/$filename
 done <modlist
 
-/home/vintagstory/server/server.sh start
+/home/vintagestory/server/server.sh start

@@ -1,9 +1,12 @@
 FROM ubuntu:24.04
 
+ARG UID
+ARG GUID
+
 USER root
 
 RUN apt-get update && \
-    apt-get install -y wget
+    apt-get install -y wget screen procps
 
 RUN wget https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && \
     dpkg -i packages-microsoft-prod.deb && \
@@ -12,7 +15,19 @@ RUN wget https://packages.microsoft.com/config/debian/13/packages-microsoft-prod
 RUN apt-get update && \
     apt-get install -y dotnet-runtime-10.0
 
-RUN useradd --create-home --shell /bin/bash vintagestory
+RUN groupadd -g ${GUID} -o vintagestory
+RUN useradd -m -u ${UID} -g ${GUID} -o -s /bin/bash vintagestory
+
+RUN mkdir -p /home/vintagestory/data/Mods && \
+    mkdir -p /home/vintagestory/data/Logs && \
+    mkdir -p /home/vintagestory/data/Saves && \
+    chown -hR vintagestory:vintagestory /home/vintagestory/data
+
+COPY --chown=vintagestory serverconfig.json /home/vintagestory/data/serverconfig.json
+COPY --chown=vintagestory entrypoint.sh /home/vintagestory/entrypoint.sh
+COPY --chown=vintagestory modlist /home/vintagestory/modlist
+
+RUN chmod +x /home/vintagestory/entrypoint.sh
 
 USER vintagestory
 
@@ -24,11 +39,4 @@ RUN wget https://cdn.vintagestory.at/gamefiles/stable/vs_server_linux-x64_1.22.0
     rm vs_server_linux.tar.gz && \
     chmod +x server/server.sh
 
-RUN mkdir -p data/
-
-COPY serverconfig.json data/serverconfig.json
-
-COPY entrypoint.sh entrypoint.sh
-COPY modlist modlist
-
-ENTRYPOINT ["entrypoint.sh"]
+ENTRYPOINT ["./entrypoint.sh"]

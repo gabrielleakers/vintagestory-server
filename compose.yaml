@@ -3,6 +3,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        UID: 1002
+        GUID: 1002
     ports:
       - 42420:42420
     volumes:
