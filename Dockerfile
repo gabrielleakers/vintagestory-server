@@ -19,8 +19,6 @@ RUN groupadd -g ${GUID} -o vintagestory
 RUN useradd -m -u ${UID} -g ${GUID} -o -s /bin/bash vintagestory
 
 RUN mkdir -p /home/vintagestory/data/Mods && \
-    mkdir -p /home/vintagestory/data/Logs && \
-    mkdir -p /home/vintagestory/data/Saves && \
     chown -hR vintagestory:vintagestory /home/vintagestory/data
 
 COPY --chown=vintagestory serverconfig.json /home/vintagestory/data/serverconfig.json

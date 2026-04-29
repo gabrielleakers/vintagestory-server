@@ -6,7 +6,7 @@ one nice feature is you can just put mod download links into [modlist](./modlist
 
 ## how to use
 
-1. clone this repo, make three directories `mods, logs, saves` in it
+1. clone this repo, make a directory `data` in it
 2. install docker, give that user permissions to use docker
 3. change the UID and GUID in [compose.yaml](./compose.yaml) to the uid and gid from `id`
 4. configure [serverconfig.json](./serverconfig.json) to your liking, put the download links for any mods you want to install in [modlist](./modlist)

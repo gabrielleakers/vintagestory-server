@@ -9,9 +9,7 @@ services:
     ports:
       - 42420:42420
     volumes:
-      - ./mods:/home/vintagestory/data/Mods
-      - ./saves:/home/vintagestory/data/Saves
-      - ./logs:/home/vintagestory/data/Logs
+      - ./data:/home/vintagestory/data
     restart: unless-stopped
     deploy:
       restart_policy:
